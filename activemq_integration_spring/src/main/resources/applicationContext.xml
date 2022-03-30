@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <!--导入配置文件-->
+    <context:property-placeholder location="classpath*:application.properties" />
+    <!--开启包扫描-->
+    <context:component-scan base-package="org.didnelpsun.entity" />
+    <!--配置JMS工厂生产消息队列连接-->
+    <!--存放连接的连接池-->
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <!--生产连接工厂-->
+        <property name="connectionFactory">
+            <!--生产具体类型的连接工厂-->
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="${brokerUrl}"/>
+            </bean>
+        </property>
+    </bean>
+    <!--配置队列目的地-->
+    <bean id="activeMQQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg name="name" value="${queueName}" />
+    </bean>
+    <!--配置队列主题-->
+    <bean id="activeMQTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg name="name" value="${topicName}" />
+    </bean>
+    <!--配置JSM工具类，由Spring提供，对JMS操作进行整合-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="pooledConnectionFactory" />
+<!--        <property name="defaultDestination" ref="activeMQQueue" />-->
+        <property name="defaultDestination" ref="activeMQTopic" />
+        <!--消息转换器-->
+        <property name="messageConverter">
+            <bean class="org.springframework.jms.support.converter.SimpleMessageConverter" />
+        </property>
+    </bean>
+    <!--配置监听器-->
+    <bean id="defaultMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="pooledConnectionFactory" />
+        <property name="destination" ref="activeMQTopic" />
+        <property name="messageListener" ref="mqMessageListener" />
+    </bean>
+</beans>

@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    user: admin
+    password: admin
+    # 维持连接运行等待时间
+    close-timeout: 15s
+    # 等待消息发送响应的时间。设置为0等待永远
+    send-timeout: 0
+  jms:
+    # 如果是false就是队列，如果是true就是主题
+    pub-sub-domain: true
+
+# 队列主题名称
+queueName: queue
+topicName: topic
