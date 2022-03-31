@@ -13,6 +13,8 @@ spring:
   jms:
     # 如果是false就是队列，如果是true就是主题
     pub-sub-domain: true
+    template:
+      delivery-mode: PERSISTENT
 
 # 队列主题名称
 queueName: queue
