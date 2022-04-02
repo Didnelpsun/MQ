@@ -2,13 +2,13 @@
 package org.didnelpsun.service;
 
 import com.rabbitmq.client.Channel;
-import org.didnelpsun.util.RabbitUtil;
+import org.didnelpsun.RabbitUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
-import static org.didnelpsun.util.Property.QUEUE_NAME;
+import static org.didnelpsun.Property.QUEUE_NAME;
 
 public class Worker {
     public int id;
@@ -56,5 +56,7 @@ public class Worker {
         }, (consumerTag) -> {
             System.out.println("工作队列" + this.id + "消费中断：" + new String(consumerTag.getBytes(StandardCharsets.UTF_8)));
         });
+        // 不公平分发
+        channel.basicQos(1);
     }
 }

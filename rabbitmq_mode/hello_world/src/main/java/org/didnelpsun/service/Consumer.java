@@ -4,13 +4,13 @@ package org.didnelpsun.service;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import org.didnelpsun.util.Property;
+import org.didnelpsun.Property;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
-import static org.didnelpsun.util.Property.QUEUE_NAME;
+import static org.didnelpsun.Property.QUEUE_NAME;
 
 public class Consumer {
 

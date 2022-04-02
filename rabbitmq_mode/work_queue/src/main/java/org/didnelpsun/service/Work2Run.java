@@ -7,6 +7,6 @@ import java.util.concurrent.TimeoutException;
 public class Work2Run {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        new Worker(2).receive();
+        new Worker(2).receive(10);
     }
 }

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hello_world</artifactId>
+    <artifactId>publish_confirm</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.didnelpsun</groupId>

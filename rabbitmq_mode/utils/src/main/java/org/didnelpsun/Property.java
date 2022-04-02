@@ -1,5 +1,5 @@
 // Property.java
-package org.didnelpsun.util;
+package org.didnelpsun;
 
 public class Property {
     public static final String host = "127.0.0.1";

@@ -1,5 +1,5 @@
 // RabbitUtil.java
-package org.didnelpsun.util;
+package org.didnelpsun;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
