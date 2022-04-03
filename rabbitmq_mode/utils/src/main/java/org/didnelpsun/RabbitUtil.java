@@ -21,8 +21,9 @@ public class RabbitUtil {
         // 创建信道
         return connection.createChannel();
     }
-    public static void sleep(int second){
-        try{
+
+    public static void sleep(int second) {
+        try {
             Thread.sleep(1000L * second);
         } catch (InterruptedException e) {
             e.printStackTrace();

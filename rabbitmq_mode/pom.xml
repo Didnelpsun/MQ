@@ -13,6 +13,9 @@
         <module>work_queue</module>
         <module>utils</module>
         <module>publish_confirm</module>
+        <module>publish_subscribe</module>
+        <module>topic</module>
+        <module>route</module>
     </modules>
 
     <properties>
