@@ -1,12 +1,12 @@
+// Subscriber.java
 package org.didnelpsun;
 
+import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
-
-import static org.didnelpsun.Property.EXCHANGE;
 
 public class Subscriber {
     public String exchangeName;
@@ -18,7 +18,7 @@ public class Subscriber {
     public void subscribe() throws IOException, TimeoutException {
         Channel channel = RabbitUtil.getChannel();
         // 声明一个扇出类型交换机
-        channel.exchangeDeclare(exchangeName, "fanout");
+        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.FANOUT);
         // 声明一个临时队列
         String queue = channel.queueDeclare().getQueue();
         // 绑定信道与队列
@@ -28,10 +28,5 @@ public class Subscriber {
         System.out.println("等待接受消息...");
         // 消费消息
         channel.basicConsume(queue, true, (consumerTag, message) -> System.out.println("消息" + consumerTag + "接受成功：" + new String(message.getBody(), StandardCharsets.UTF_8)), (consumerTag) -> System.out.println("消息" + consumerTag + "接受失败"));
-    }
-
-    public static void main(String[] args) throws IOException, TimeoutException {
-        new Subscriber(EXCHANGE).subscribe();
-        new Subscriber(EXCHANGE).subscribe();
     }
 }
