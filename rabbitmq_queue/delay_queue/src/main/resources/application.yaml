@@ -1,0 +1,31 @@
+# RabbitMQ连接配置
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+# 项目配置参数
+property:
+  # 交换机名称
+  # 普通交换机
+  normal_exchange: normal_exchange
+  # 死信交换机
+  delay_exchange: delay_exchange
+  # 队列名称
+  # 普通队列
+  queue3: queue_3
+  queue10: queue_10
+  # 无TTL队列
+  queueFree: queue_free
+  # 死信队列
+  queue: queue
+  # RoutingKey
+  delay3: delay_3
+  delay10: delay_10
+  delay: delay
+  send: send
+  # TLL
+  ttl3: 3000
+  ttl10: 10000

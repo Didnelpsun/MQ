@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.didnelpsun</groupId>
-    <artifactId>delay_queue</artifactId>
+    <artifactId>persistence</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>delay_queue</name>
-    <description>delay_queue</description>
+    <name>persistence</name>
+    <description>persistence</description>
     <properties>
         <java.version>17</java.version>
     </properties>
