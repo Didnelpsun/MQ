@@ -22,13 +22,13 @@ public class AsyncProducer extends Producer {
         this.sleep = 5;
     }
 
-    public AsyncProducer(String nameServer, String producerGroup) {
-        super(nameServer, producerGroup);
+    public AsyncProducer(String nameServer, String group) {
+        super(nameServer, group);
         this.sleep = 5;
     }
 
-    public AsyncProducer(String nameServer, String producerGroup, int sleep) {
-        super(nameServer, producerGroup);
+    public AsyncProducer(String nameServer, String group, int sleep) {
+        super(nameServer, group);
         this.sleep = sleep;
     }
 
@@ -38,16 +38,11 @@ public class AsyncProducer extends Producer {
 
     public SendResult send(String topic, String tag, String message) throws RemotingException, InterruptedException, MQClientException {
         // 默认不异步重发
-        return send(topic, tag, message, 0);
+        return send(topic, tag, message, 2, 3000);
     }
 
-    public SendResult send(String topic, String tag, String message, int retryTimesWhenSendAsyncFailed) throws MQClientException, RemotingException, InterruptedException {
-        // 创建一个Producer，参数为Producer Group名称，我们是普通消息所以使用normal
-        DefaultMQProducer producer = new DefaultMQProducer(this.producerGroup);
-        // 设置NameServer地址
-        producer.setNamesrvAddr(this.nameServer);
-        // 设置异步发送失败后进行重试发送的次数
-        producer.setRetryTimesWhenSendAsyncFailed(retryTimesWhenSendAsyncFailed);
+    public SendResult send(String topic, String tag, String message, int retryTimesWhenSendAsyncFailed, int sendMsgTimeout) throws MQClientException, RemotingException, InterruptedException {
+        DefaultMQProducer producer = Producer.getDefaultMQProducer(this.nameServer, this.group, retryTimesWhenSendAsyncFailed, sendMsgTimeout);
         // 开启生产者
         producer.start();
         // 生产消息
@@ -68,6 +63,7 @@ public class AsyncProducer extends Producer {
         // 必须休眠等待发送结果，否则会直接关闭
         TimeUnit.SECONDS.sleep(this.sleep);
         producer.shutdown();
+        System.out.println("AsyncProducer发送完成");
         return result[0];
     }
 

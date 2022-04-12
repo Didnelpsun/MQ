@@ -18,8 +18,8 @@ public class SyncProducer extends Producer {
         super("normal");
     }
 
-    public SyncProducer(String nameServer, String producerGroup) {
-        super(nameServer, producerGroup);
+    public SyncProducer(String nameServer, String group) {
+        super(nameServer, group);
     }
 
     public SendResult send(String topic, String message) throws Exception {
@@ -31,14 +31,7 @@ public class SyncProducer extends Producer {
     }
 
     public SendResult send(String topic, String tag, String message, int retryTimesWhenSendFailed, int sendMsgTimeout) throws MQClientException, MQBrokerException, RemotingException, InterruptedException {
-        // 创建一个Producer，参数为Producer Group名称，我们是普通消息所以使用normal
-        DefaultMQProducer producer = new DefaultMQProducer(this.producerGroup);
-        // 设置NameServer地址
-        producer.setNamesrvAddr(this.nameServer);
-        // 设置当同步发送失败是重试发送的次数，默认为为2次
-        producer.setRetryTimesWhenSendFailed(retryTimesWhenSendFailed);
-        // 设置发送超时时限，默认为3s
-        producer.setSendMsgTimeout(sendMsgTimeout);
+        DefaultMQProducer producer = Producer.getDefaultMQProducer(this.nameServer, this.group, retryTimesWhenSendFailed, sendMsgTimeout);
         // 开启生产者
         producer.start();
         // 生产消息
@@ -46,6 +39,7 @@ public class SyncProducer extends Producer {
         // 发送消息
         SendResult result = producer.send(msg);
         producer.shutdown();
+        System.out.println("SyncProducer发送完成");
         return result;
     }
 
