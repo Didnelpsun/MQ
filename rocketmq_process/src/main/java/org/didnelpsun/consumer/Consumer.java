@@ -59,6 +59,14 @@ public class Consumer {
         this.mode = mode;
     }
 
+    public Consumer(String nameServer, String group, ConsumeFromWhere type, String topic, MessageModel mode) {
+        this.nameServer = nameServer;
+        this.group = group;
+        this.type = type;
+        this.topic = topic;
+        this.mode = mode;
+    }
+
     public Consumer(String nameServer, String group, ConsumeFromWhere type, String topic, String tag, MessageModel mode) {
         this.nameServer = nameServer;
         this.group = group;
@@ -84,13 +92,6 @@ public class Consumer {
 
     @Override
     public String toString() {
-        return "Consumer{" +
-                "nameServer='" + nameServer + '\'' +
-                ", group='" + group + '\'' +
-                ", type=" + type +
-                ", topic='" + topic + '\'' +
-                ", tag='" + tag + '\'' +
-                ", mode=" + mode +
-                '}';
+        return "Consumer{" + "nameServer='" + nameServer + '\'' + ", group='" + group + '\'' + ", type=" + type + ", topic='" + topic + '\'' + ", tag='" + tag + '\'' + ", mode=" + mode + '}';
     }
 }
